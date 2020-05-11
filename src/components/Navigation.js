@@ -46,12 +46,31 @@ function Navigation() {
             </Navbar>
             </Col>
             </Row>
-            <Row>
-            <Col>
-     <br></br>
-     <br></br>           
-     </Col>
-            </Row>
+           
+           
+            <Row>    
+    <Col><br></br> </Col>
+    <Col> <br></br></Col>
+    <Col> <br></br></Col>
+    </Row>
+
+            <Row>    
+    <Col><br></br> </Col>
+    <Col> <br></br></Col>
+    <Col> <br></br></Col>
+    </Row>
+    <Row>    
+    <Col><br></br> </Col>
+    <Col> <br></br></Col>
+    <Col> <br></br></Col>
+    </Row>
+
+
+    <Row>    
+    <Col><br></br> </Col>
+    <Col> <br></br></Col>
+    <Col> <br></br></Col>
+    </Row>
             </Container>
         
 

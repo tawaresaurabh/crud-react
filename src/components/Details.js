@@ -4,7 +4,9 @@ import Table from 'react-bootstrap/Table'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
 import axios from 'axios';
+import Moment from 'react-moment';
 
 
 function Details(props) {
@@ -29,7 +31,7 @@ function Details(props) {
       <td>{props.detailKey}</td>
       {props.detailType === 'string' && <td>{props.detailValue}</td>}
       {props.detailType === 'number' && <td>{props.detailValue}</td>}
-      {props.detailType === 'date' && <td>{props.detailValue}</td>}
+      {props.detailType === 'date' && <td><Moment format="MM/DD/yyyy">{props.detailValue}</Moment></td>}
       
     </tr>
   
@@ -41,17 +43,18 @@ function Details(props) {
     
     <Container fluid>
     
-    <Row>
-    
-    <Col><h4 className="font-weight-normal px-3 py-50 pt-md-5 pb-md-4 mx-auto"> Details</h4></Col>
-
+   
     
 
 
+    <Row>    
+    <Col><h4 className="font-weight-normal"> Details</h4></Col>
+    <Col></Col>
+    
     </Row>
     
 
-    <Table  bordered hover responsive>            
+    <Table  striped bordered hover responsive>            
             <tbody>
             <DetailRow detailKey='Name' detailValue={booking.firstName + ' '+ booking.lastName} detailType='string'/>
             <DetailRow detailKey='Email' detailValue={booking.email} detailType='string'/>

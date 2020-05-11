@@ -13,7 +13,7 @@ function Contact() {
   
         
     <Row>
-        <Col><h4 className="font-weight-normal px-3 py-50 pt-md-5 pb-md-4 mx-auto"> Contact </h4></Col>
+        <Col><h4 className="font-weight-normal"> Contact </h4></Col>
       </Row>
     
    

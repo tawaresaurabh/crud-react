@@ -36,7 +36,7 @@ function AppForm() {
 
       <Row>
 
-        <Col><h4 className="font-weight-normal px-3 py-50 pt-md-5 pb-md-4 mx-auto"> Booking Form</h4></Col>
+        <Col><h4 className="font-weight-normal"> Booking Form</h4></Col>
 
 
 
@@ -75,7 +75,7 @@ function AppForm() {
             </Form.Group>
             <Form.Group as={Col} controlId="formGridDate">
               <Form.Label>Estimated Date</Form.Label>
-              <Form.Control name="startDate" value={bookingForm.startDate} onChange={handleChange} />
+              <Form.Control  name="startDate" placeholder="MM/DD/YYYY" value={bookingForm.startDate} onChange={handleChange} />
             </Form.Group>
           </Form.Row>
 
