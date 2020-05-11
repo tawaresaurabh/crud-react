@@ -7,11 +7,13 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom'
 
 
 
 function AppForm() {
   
+  const[redirect,setRedirect] = useState(false)
   const [bookingForm, setFormValues] = useState(
     { firstName: '', lastName: '', email: '', phoneNumber: '', numberOfWeeks: '', startDate: '', amount: '' }
   );
@@ -20,13 +22,19 @@ function AppForm() {
     setFormValues({ ...bookingForm, [event.target.name]: event.target.value })
   }
 
+  if (redirect) {
+    return <Redirect to='/list'/>;
+  }
+  
+
   const handleSubmit = (e) => {    
     e.preventDefault()    
     axios.post('http://localhost:8080/api/createBooking',bookingForm)
       .then(function (response) {
-        setFormValues({firstName: '', lastName: '', email: '', phoneNumber: '', numberOfWeeks: '', startDate: '', amount: ''})       
-      })
-      .catch(function (error) {
+        setFormValues({firstName: '', lastName: '', email: '', phoneNumber: '', numberOfWeeks: '', startDate: '', amount: ''})               
+      }).then(function (response){
+        setRedirect(true)
+      }).catch(function (error) {
         console.log(error)
       })
   }

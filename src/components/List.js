@@ -85,7 +85,7 @@ function List() {
             <Dropdown.Toggle split variant={props.record.status === 2 ? "danger" : "info"} id="dropdown-split-basic" />
 
             <Dropdown.Menu>
-              <Dropdown.Item href="/form">Edit</Dropdown.Item>
+              <Dropdown.Item>Edit</Dropdown.Item>
               <Dropdown.Item onClick={()=>handleDelete(props.record.appointmentId)}>Delete</Dropdown.Item>              
             </Dropdown.Menu>
           </Dropdown>
