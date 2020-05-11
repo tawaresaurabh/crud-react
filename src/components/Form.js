@@ -24,7 +24,7 @@ function AppForm() {
     e.preventDefault()    
     axios.post('http://localhost:8080/api/createBooking',bookingForm)
       .then(function (response) {
-        console.log(response)
+        setFormValues({firstName: '', lastName: '', email: '', phoneNumber: '', numberOfWeeks: '', startDate: '', amount: ''})       
       })
       .catch(function (error) {
         console.log(error)
