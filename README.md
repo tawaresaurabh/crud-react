@@ -1,7 +1,13 @@
-
+## List View
 <img width="1249" alt="2020-05-12 17_33_59-CRUD App" src="https://user-images.githubusercontent.com/39241806/81705401-ae07fe80-9477-11ea-8f4e-75d1f3b519db.png">
+<br />
+## Create/Update view
 <img width="1036" alt="2020-05-12 17_34_52-CRUD App" src="https://user-images.githubusercontent.com/39241806/81705412-afd1c200-9477-11ea-8dec-8e7752160e3a.png">
+<br />
+## Detail view
 <img width="790" alt="2020-05-12 17_35_18-CRUD App" src="https://user-images.githubusercontent.com/39241806/81705416-b06a5880-9477-11ea-9eb2-79e0f9714bb0.png">
+<br/>
+
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
