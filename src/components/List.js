@@ -22,8 +22,7 @@ function List() {
     fetchBookingList()    
   }, [])
 
-  const fetchBookingList = async()=>{
-    console.log('Fecting list data')
+  const fetchBookingList = async()=>{    
     axios.get('http://localhost:8080/api/activeBookings')
     .then(response => {    
       console.log(response.data)  
@@ -48,6 +47,11 @@ function List() {
         console.log(error)
       }) 
     
+  }
+
+  const handleEdit=(record)=>{    
+    history.push('/form',{record:record})
+
   }
 
   const handleDelete = (id) => {
@@ -85,7 +89,7 @@ function List() {
             <Dropdown.Toggle split variant={props.record.status === 2 ? "danger" : "info"} id="dropdown-split-basic" />
 
             <Dropdown.Menu>
-              <Dropdown.Item>Edit</Dropdown.Item>
+              <Dropdown.Item onClick={()=>handleEdit(props.record)}>Edit</Dropdown.Item>
               <Dropdown.Item onClick={()=>handleDelete(props.record.appointmentId)}>Delete</Dropdown.Item>              
             </Dropdown.Menu>
           </Dropdown>

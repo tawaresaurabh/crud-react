@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 
 
 import Container from 'react-bootstrap/Container';
@@ -7,23 +7,40 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom'
+
+import {Redirect,useHistory} from 'react-router-dom'
 
 
 
-function AppForm() {
+
+
+function AppForm(props) {
+  const history = useHistory()
   
-  const[redirect,setRedirect] = useState(false)
+  const [appointmentId,setAppointmentId] = useState('')
+  const[editMode,setEditMode] =  useState(false)
+  
   const [bookingForm, setFormValues] = useState(
     { firstName: '', lastName: '', email: '', phoneNumber: '', numberOfWeeks: '', startDate: '', amount: '' }
   );
 
-  const handleChange = (event) => {
-    setFormValues({ ...bookingForm, [event.target.name]: event.target.value })
+
+  useEffect(() => {
+    if(props.location.state && props.location.state.record ){            
+      let prevStartDate = props.location.state.record.startDate
+      let newStartDate = prevStartDate.substring(0,10)
+      props.location.state.record.startDate = newStartDate      
+      setEditMode(true)
+      setFormValues(props.location.state.record)     
+    }        
+  }, [props.location.state])
+
+  const handleChange = (event) => {    
+    setFormValues({ ...bookingForm, [event.target.name]: event.target.value })    
   }
 
-  if (redirect) {
-    return <Redirect to='/list'/>;
+  if (appointmentId) {    
+    return <Redirect to={`/details/${appointmentId}`}/>;
   }
   
 
@@ -31,13 +48,31 @@ function AppForm() {
     e.preventDefault()    
     axios.post('http://localhost:8080/api/createBooking',bookingForm)
       .then(function (response) {
-        setFormValues({firstName: '', lastName: '', email: '', phoneNumber: '', numberOfWeeks: '', startDate: '', amount: ''})               
-      }).then(function (response){
-        setRedirect(true)
+        console.log(response.data)
+        setFormValues({ firstName: '', lastName: '', email: '', phoneNumber: '', numberOfWeeks: '', startDate: '', amount: '' })               
+        setAppointmentId(response.data.appointmentId)
       }).catch(function (error) {
         console.log(error)
       })
   }
+
+  const handleUpdate = (e) => {    
+    e.preventDefault()    
+    
+    axios.put('http://localhost:8080/api/updateBooking',bookingForm)
+      .then(function (response) {
+        console.log(response.data)
+        setFormValues({ firstName: '', lastName: '', email: '', phoneNumber: '', numberOfWeeks: '', startDate: '', amount: '' })               
+        setAppointmentId(response.data.appointmentId )             
+      }).then(function(){
+        
+      })
+      
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
+
 
   return (
     <Container fluid>
@@ -51,39 +86,39 @@ function AppForm() {
       </Row>
       <Row>
         <Col></Col>
-        <Col><Form onSubmit={handleSubmit}>
+        <Col><Form onSubmit={!editMode?handleSubmit:handleUpdate}>
           <Form.Row>
 
 
             <Form.Group as={Col} controlId="formGridfName">
               <Form.Label>First Name</Form.Label>
-              <Form.Control name="firstName" placeholder="First Name" value={bookingForm.firstName} onChange={handleChange} />
+              <Form.Control required name="firstName" placeholder="First Name" value={bookingForm.firstName} onChange={handleChange} />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridlName">
               <Form.Label>Last Name</Form.Label>
-              <Form.Control name="lastName" placeholder="Last Name" value={bookingForm.lastName} onChange={handleChange} />
+              <Form.Control required name="lastName" placeholder="Last Name" value={bookingForm.lastName} onChange={handleChange} />
             </Form.Group>
           </Form.Row>
           <Form.Row>
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label>Email</Form.Label>
-              <Form.Control name="email" type="email" placeholder="Enter email" value={bookingForm.email} onChange={handleChange} />
+              <Form.Control required name="email" type="email" placeholder="Enter email" value={bookingForm.email} onChange={handleChange} />
             </Form.Group>
             <Form.Group as={Col} controlId="formGridPhone">
               <Form.Label>Phone</Form.Label>
-              <Form.Control name="phoneNumber" placeholder="Phone" value={bookingForm.phoneNumber} onChange={handleChange} />
+              <Form.Control required name="phoneNumber" placeholder="Phone" value={bookingForm.phoneNumber} onChange={handleChange} />
             </Form.Group>
           </Form.Row>
           <Form.Row>
 
             <Form.Group as={Col} controlId="formGridWeeks">
               <Form.Label>Number of Weeks</Form.Label>
-              <Form.Control name="numberOfWeeks" type="number" value={bookingForm.numberOfWeeks} onChange={handleChange} />
+              <Form.Control required name="numberOfWeeks" type="number" value={bookingForm.numberOfWeeks} onChange={handleChange} />
             </Form.Group>
             <Form.Group as={Col} controlId="formGridDate">
-              <Form.Label>Estimated Date</Form.Label>
-              <Form.Control  name="startDate" placeholder="MM/DD/YYYY" value={bookingForm.startDate} onChange={handleChange} />
+              <Form.Label>Estimated Date</Form.Label>              
+              <Form.Control required type="date" name="startDate"  value={bookingForm.startDate} onChange={handleChange} />
             </Form.Group>
           </Form.Row>
 
@@ -95,9 +130,23 @@ function AppForm() {
             </Form.Group>
 
           </Form.Row>
+          <Form.Row>
+          <Form.Group as={Col} controlId="formGridBtn">
+          <Button  variant="primary" type="submit">{editMode?'Update':'Submit'}</Button>
+            </Form.Group>
 
+            <Form.Group as={Col} controlId="formGridBtn">
+            {editMode && <Button  variant="primary" onClick={()=>{history.goBack()}}>Back</Button> }
+            </Form.Group>
 
-          <Button variant="primary" type="submit">Submit</Button>
+          
+          
+           
+
+          </Form.Row>
+          
+          
+          
         </Form></Col>
         <Col></Col>
 
