@@ -10,9 +10,15 @@ import Contact from './components/Contact';
 import Container from 'react-bootstrap/Container';
 
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
+import {Provider} from 'react-redux'
+import configureStore from './store/ConfigureStore'
+
+const store = configureStore()
 
 function App() {
   return (
+
+    <Provider store={store}>
     <Router>    
     <Container fluid>
     <Navigation></Navigation>
@@ -30,6 +36,7 @@ function App() {
     
     </Container>    
     </Router>
+    </Provider>
     
    
   );
